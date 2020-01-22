@@ -24,4 +24,4 @@ const App = () => {
 		</div>
 	)
 }
-export default Appk
+export default App
