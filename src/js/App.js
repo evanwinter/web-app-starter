@@ -1,5 +1,25 @@
 import React, { useState } from "react"
 
+const getEncrypted = (data) => {
+	const encryptURL = "https://forms.stormcloud.ninja/dev/general_encrypt/"
+	const url = encryptURL + data
+	return fetch(url).then((result) => result.text().then((html) => html))
+}
+
+const getDecrypted = (data) => {
+	const decryptURL = "https://forms.stormcloud.ninja/dev/general_decrypt/"
+	const url = decryptURL + data
+	return fetch(url).then((result) => result.text().then((html) => html))
+}
+
+const displayResults = (query, mode) => {
+	if (mode === "encrypt") {
+		return getEncrypted(query)
+	} else {
+		return getDecrypted(query)
+	}
+}
+
 export const Form = () => {
 	const [query, setQuery] = useState("")
 	const [mode, setMode] = useState("encrypt")
@@ -8,32 +28,11 @@ export const Form = () => {
 	const handleTextChange = (e) => setQuery(e.target.value)
 	const handleRadioChange = (e) => setMode(e.target.value)
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = (e) => {
 		e.preventDefault()
 		if (query && query.trim()) {
-			const result = await displayResults(query, mode)
-			setResult(result)
+			displayResults(query, mode).then((result) => setResult(result))
 		}
-	}
-
-	const encrypt = async (data) => {
-		const encryptURL = "https://forms.stormcloud.ninja/dev/general_encrypt/"
-		const url = encryptURL + data
-		const result = await fetch(url)
-		const html = await result.text()
-		return html
-	}
-
-	const decrypt = async (data) => {
-		const decryptURL = "https://forms.stormcloud.ninja/dev/general_decrypt/"
-		const url = decryptURL + data
-		const result = await fetch(url)
-		const html = await result.text()
-		return html
-	}
-
-	const displayResults = async (query, mode) => {
-		return mode === "encrypt" ? await encrypt(query) : await decrypt(query)
 	}
 
 	return (
