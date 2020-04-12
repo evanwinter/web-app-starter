@@ -7,12 +7,13 @@ $color: $black;
 $link-color: blue;
 $link-color-reversed: yellow;
 
-$sans: -apple-system, BlinkMacSystemFont, "avenir next", avenir, "helvetica neue", helvetica,
-		ubuntu, roboto, noto, "segoe ui", arial, sans-serif;
+$sans: -apple-system, BlinkMacSystemFont, "avenir next", avenir,
+	"helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial,
+	sans-serif;
 
 $breakpoint-sm: 37.5rem; // 600px
-$breakpoint-md: 48rem;	 // 768px
-$breakpoint-lg: 64rem;	 // 1024px
+$breakpoint-md: 48rem; // 768px
+$breakpoint-lg: 64rem; // 1024px
 
 * {
 	box-sizing: border-box;
@@ -25,19 +26,16 @@ html {
 }
 
 body {
-	background: $background;
-	color: $color;
-	font-family: $sans;
+	background: var(--background-color);
+	color: var(--text-color);
+	font-family: var(--sans);
 	margin: 0;
 	padding: 0;
 	line-height: 1.5;
 }
 
 a {
-	color: $link-color;
-	&:hover {
-		color: rgba($link-color, 0.75);
-	}
+	color: var(--link-color);
 }
 
 .container {
@@ -63,8 +61,106 @@ a {
 	grid-gap: 1rem;
 	@media (min-width: $breakpoint-sm) {
 		grid-template-columns: 1fr 1fr;
-		&.two-col { grid-template-columns: 1fr 1fr; }
-		&.three-col { grid-template-columns: 1fr 1fr 1fr; }
-		&.four-col { grid-template-columns: 1fr 1fr 1fr 1fr; }
+		&.two-col {
+			grid-template-columns: 1fr 1fr;
+		}
+		&.three-col {
+			grid-template-columns: 1fr 1fr 1fr;
+		}
+		&.four-col {
+			grid-template-columns: 1fr 1fr 1fr 1fr;
+		}
 	}
+}
+
+header {
+	text-align: center;
+	font-size: 3rem;
+	padding: 2rem 0;
+}
+
+.Grid {
+	display: grid;
+	grid-gap: 0rem;
+
+	grid-template-columns: 1fr;
+
+	@media (min-width: $breakpoint-sm) {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	@media (min-width: $breakpoint-md) {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+
+	@media (min-width: $breakpoint-lg) {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+}
+
+.GridItem {
+	position: relative;
+	height: 60vh;
+	font-size: 1.5rem;
+
+	&__background,
+	&__overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+
+	&__background {
+		z-index: 1;
+		background-position: center;
+	}
+
+	&__overlay {
+		z-index: 2;
+		opacity: 1;
+		transition: background 350ms ease, color 350ms ease;
+
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-direction: column;
+
+		padding: 1rem;
+	}
+
+	&:hover {
+		.GridItem__overlay {
+			background: transparent !important;
+			color: var(--color-light);
+		}
+	}
+}
+
+:root {
+	--color-tan: #bfbda7;
+	--color-red: #fe4814;
+	--color-lavender: #847e96;
+	--color-neon: #d0ff71;
+	--color-maroon: #993333;
+	--color-blue: #3aaafa;
+	--color-green: #41907a;
+	--color-pink: #e3c4e5;
+	--color-yellow: #fef577;
+	--color-limegreen: #00ff59;
+	--color-slateblue: #6575a8;
+	--color-silver: #ebebeb;
+
+	--color-dark: #111;
+	--color-light: #f6f6f6;
+
+	--text-color: var(--color-dark);
+	--background-color: var(--color-light);
+
+	--link-color: var(--text-color);
+
+	--sans: -apple-system, BlinkMacSystemFont, "avenir next", avenir,
+		"helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial,
+		sans-serif;
 }
